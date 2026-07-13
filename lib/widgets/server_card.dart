@@ -66,9 +66,35 @@ class ServerCard extends StatelessWidget {
                         server.pais.isEmpty
                             ? "Sin país"
                             : server.pais,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                        ),
+                      ),
+
+                      const SizedBox(height: 6),
+
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            size: 12,
+                            color: server.conectado
+                                ? Colors.green
+                                : Colors.grey,
+                          ),
+
+                          const SizedBox(width: 8),
+
+                          Text(
+                            server.conectado
+                                ? "Conectado"
+                                : "Desconectado",
+                            style: TextStyle(
+                              fontWeight:
+                                  FontWeight.w500,
+                              color: server.conectado
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -91,6 +117,7 @@ class ServerCard extends StatelessWidget {
                   size: 18,
                 ),
                 const SizedBox(width: 8),
+
                 Text(
                   "${server.ip}:${server.puerto}",
                 ),
@@ -106,6 +133,7 @@ class ServerCard extends StatelessWidget {
                   size: 18,
                 ),
                 const SizedBox(width: 8),
+
                 Text(
                   server.usuario.isEmpty
                       ? "Sin usuario"
@@ -124,7 +152,9 @@ class ServerCard extends StatelessWidget {
                       : Icons.lock_open,
                   size: 18,
                 ),
+
                 const SizedBox(width: 8),
+
                 Text(
                   server.tls
                       ? "TLS activado"
@@ -142,11 +172,15 @@ class ServerCard extends StatelessWidget {
 
                 FilledButton.icon(
                   onPressed: onConnect,
-                  icon: const Icon(
-                    Icons.play_arrow,
+                  icon: Icon(
+                    server.conectado
+                        ? Icons.stop
+                        : Icons.play_arrow,
                   ),
-                  label: const Text(
-                    "Conectar",
+                  label: Text(
+                    server.conectado
+                        ? "Desconectar"
+                        : "Conectar",
                   ),
                 ),
 

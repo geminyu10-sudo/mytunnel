@@ -95,13 +95,20 @@ class _ServersPageState extends State<ServersPage> {
   }
 
   void conectarServidor(Server server) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Conectando a ${server.nombre}"),
-      ),
-    );
-  }
+  setState(() {
+    server.conectado = !server.conectado;
+  });
 
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        server.conectado
+            ? "Conectado a ${server.nombre}"
+            : "Desconectado de ${server.nombre}",
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

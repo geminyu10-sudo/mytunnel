@@ -9,7 +9,9 @@ class Server {
   final String pais;
   final bool favorito;
 
-  const Server({
+  bool conectado;
+
+  Server({
     required this.nombre,
     required this.ip,
     required this.puerto,
@@ -19,5 +21,6 @@ class Server {
     required this.sni,
     required this.pais,
     this.favorito = false,
+    this.conectado = false,
   });
 }
