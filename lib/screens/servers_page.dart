@@ -1,3 +1,4 @@
+import '../services/tunnel_service.dart';
 import 'package:flutter/material.dart';
 import '../models/server.dart';
 import '../services/storage_service.dart';
@@ -13,6 +14,7 @@ class ServersPage extends StatefulWidget {
 
 class _ServersPageState extends State<ServersPage> {
   List<Server> servidores = [];
+  final TunnelService tunnelService = TunnelService();
 
   @override
   void initState() {
@@ -94,17 +96,30 @@ class _ServersPageState extends State<ServersPage> {
     }
   }
 
-  void conectarServidor(Server server) {
+  Future<void> conectarServidor(Server server) async {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Conectando..."),
+    ),
+  );
+
+  final resultado = await tunnelService.conectar(
+    ip: server.ip,
+    puerto: server.puerto,
+    usuario: server.usuario,
+    password: server.password,
+  );
+
   setState(() {
-    server.conectado = !server.conectado;
+    server.conectado = resultado;
   });
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
-        server.conectado
+        resultado
             ? "Conectado a ${server.nombre}"
-            : "Desconectado de ${server.nombre}",
+            : "Error de conexión",
       ),
     ),
   );
